@@ -1,26 +1,28 @@
 name: RDP
 on: [workflow_dispatch]
-
-jobs:
-  build:
-    runs-on: windows-latest
-    steps:
-    - name: Download ngrok
-      run: |
-        Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Expand-Archive ngrok.zip
-        
-    - name: Set ngrok authtoken
-      run: .\ngrok.exe authtoken $env:NGROK_AUTH_TOKEN
-      env:
-        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-        
-    - name: Enable RDP
-      run: |
-        net user kamel123 MyStrong123 /add
-        net localgroup administrators kamel123 /add
-        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
-        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-        
-    - name: Start ngrok
-      run: Start-Process -NoNewWindow -FilePath ".\ngrok.exe" -ArgumentList "tcp 3389"
+:jobs
+:build
+:steps
+runs-on: windows-latest
+name: Download ngrok -
+| :run
+Invoke-WebRequest
+https://bin.equinox.io/c/bNyj1mQVY4 c/ngrok-stable-windows-amd64.zip -
+OutFile ngrok.zip
+Expand-Archive ngrok.zip
+ngrok.exe authtoken/.
+YOUR_AUTH_TOKEN
+name: Enable RDP -
+| :run
+net user kamel123
+MyStrong123/add.
+net localgroup
+administrators kamel123 /add
+Set-ItemProperty -Path
+'HKLM: \System\CurrentControlSet\Con
+trol\Terminal Server'
+-Name
+'fDeny TSConnections' -Value 0
+Enable-NetFirewallRule -
+"DisplayGroup "Remote Desktop
+ngrok.exe tcp 3389/.
